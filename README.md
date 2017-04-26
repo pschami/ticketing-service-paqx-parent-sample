@@ -9,7 +9,7 @@
 ## Deploying
 ## Contributing
 ## Community
-Reach out to us on Slack [#Symphony][slack] channel. Request an invite at [{code}Community][codecommunity]
+Reach out to us on Slack [#symphony][slack] channel. Request an invite at [{code}Community][codecommunity]
 You can also join [Google Groups][googlegroups] and start a discussion. 
 
 [slack]: https://codecommunity.slack.com/messages/symphony
