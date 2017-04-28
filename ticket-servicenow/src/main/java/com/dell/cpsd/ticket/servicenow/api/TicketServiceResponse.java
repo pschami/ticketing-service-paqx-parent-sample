@@ -22,7 +22,9 @@ import com.fasterxml.jackson.annotation.JsonPropertyOrder;
 @Message(value = "com.dell.cpsd.ticket.response", version = "1.0")
 @JsonPropertyOrder({
 	"messageProperties",
-	"responseCode"
+	"responseCode",
+	"eventId",
+	"ticketDetails"
 })
 public class TicketServiceResponse  implements HasMessageProperties<MessageProperties>{
 
@@ -44,6 +46,17 @@ public class TicketServiceResponse  implements HasMessageProperties<MessagePrope
      */
     @JsonProperty("responseCode")
     private String responseCode;
+    
+    /**
+     * 
+     * (Required)
+     * 
+     */
+    @JsonProperty("eventId")
+    private String eventId;
+    
+    @JsonProperty("ticketDetails")
+	private TicketDetails ticketDetails;
 
     /**
      * No args constructor for use in serialization
@@ -56,9 +69,10 @@ public class TicketServiceResponse  implements HasMessageProperties<MessagePrope
      * 
      * @param responseCode
      */
-    public TicketServiceResponse(String responseCode) {
+    public TicketServiceResponse(String responseCode, String eventId) {
         super();
         this.responseCode = responseCode;
+        this.eventId = eventId;
     }
 
     /**
@@ -85,6 +99,30 @@ public class TicketServiceResponse  implements HasMessageProperties<MessagePrope
         this.responseCode = responseCode;
     }
     
+    /**
+     * 
+     * (Required)
+     * 
+     * @return
+     *     The eventId
+     */
+    @JsonProperty("eventId")
+    public String getEventId() {
+        return eventId;
+    }
+
+    /**
+     * 
+     * (Required)
+     * 
+     * @param eventId
+     *     The eventId
+     */
+    @JsonProperty("eventId")
+    public void setEventId(String eventId) {
+        this.eventId = eventId;
+    }
+    
     @Override
     @JsonProperty("messageProperties")
 	public MessageProperties getMessageProperties() {
@@ -98,6 +136,18 @@ public class TicketServiceResponse  implements HasMessageProperties<MessagePrope
 		this.messageProperties = messageProperties;
 		
 	}
+	
+	@JsonProperty("ticketDetails")
+	public TicketDetails getTicketDetails() {
+		// TODO Auto-generated method stub
+		return ticketDetails;
+	}
+
+	@JsonProperty("ticketDetails")
+	public void setTicketDetails(TicketDetails ticketDetails) {
+		this.ticketDetails = ticketDetails;
+
+	}
 
     @Override
     public String toString() {
@@ -106,7 +156,7 @@ public class TicketServiceResponse  implements HasMessageProperties<MessagePrope
 
     @Override
     public int hashCode() {
-        return new HashCodeBuilder().append(messageProperties).append(responseCode).toHashCode();
+        return new HashCodeBuilder().append(messageProperties).append(responseCode).append(eventId).append(ticketDetails).toHashCode();
     }
 
     @Override
@@ -118,7 +168,7 @@ public class TicketServiceResponse  implements HasMessageProperties<MessagePrope
             return false;
         }
         TicketServiceResponse rhs = ((TicketServiceResponse) other);
-        return new EqualsBuilder().append(messageProperties, rhs.messageProperties).append(responseCode, rhs.responseCode).isEquals();
+        return new EqualsBuilder().append(messageProperties, rhs.messageProperties).append(responseCode, rhs.responseCode).append(eventId, rhs.eventId).append(ticketDetails, rhs.ticketDetails).isEquals();
     }
 
 

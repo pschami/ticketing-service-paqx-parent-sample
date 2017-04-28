@@ -20,7 +20,7 @@ import org.springframework.context.annotation.PropertySources;
  * @since 1.0
  */
 @Configuration
-@PropertySources({@PropertySource(value = "classpath:META-INF/spring/apm-nagios/rabbitmq.properties"),
+@PropertySources({@PropertySource(value = "classpath:META-INF/spring/ticket-servicenow/rabbitmq.properties"),
         @PropertySource(value = "file:/opt/dell/cpsd/registration-services/ticket-servicenow/conf/rabbitmq-config.properties", ignoreResourceNotFound = true)})
 @Qualifier("rabbitPropertiesConfig")
 public class TicketingServicePropertiesConfig extends RabbitMQPropertiesConfig

@@ -191,8 +191,8 @@ public class TicketingServiceService {
 			incidentTitle = "Test title";	
 			incidentNote = "test note";
 		} else {
-			// incidentTitle = message.incidentTitle;
-			// incidentNote = message.incidentNote;
+			 incidentTitle = message.getTicketDetails().getIncidentTitle();
+			 incidentNote = message.getTicketDetails().getIncidentNote();
 		}
 		
 
@@ -201,9 +201,9 @@ public class TicketingServiceService {
 	 	String postData = "{\"short_description\":\"" + incidentTitle + "\"}";
 	 	Map result = post("https://" + HOST+CREATE_URL, postData);
 	 	incidentId = (String)((Map)result.get("result")).get("sys_id");
-	 	LOG.debug("Created incident: " + incidentId);
- 	
-		INCIDENT = incidentId;
+	 	
+	 	INCIDENT = incidentId;	 	
+	 	LOG.debug("Created incident: " + incidentId);		
 		return incidentId;
 	}
 	
@@ -219,9 +219,9 @@ public class TicketingServiceService {
 			incidentNote = "test note added by Symphony";
 			incidentId = INCIDENT;
 		} else {
-			// incidentTitle = message.incidentTitle;
-			// incidentNote = message.incidentNote;
-			// incidentId = message.incidentId;
+			incidentTitle = message.getTicketDetails().getIncidentTitle();
+			incidentNote = message.getTicketDetails().getIncidentNote();
+			incidentId = message.getTicketDetails().getIncidentId();
 		}
 
 		String data = "{\"element\": \"work_notes\"," +
@@ -253,8 +253,8 @@ public class TicketingServiceService {
 			incidentId = INCIDENT;
 			incidentNote = "Incident close by Symphony";
 		} else {
-			// incidentId = message.incidentId;
-			// incidentNote = message.incidentNote;
+			incidentNote = message.getTicketDetails().getIncidentNote();
+			incidentId = message.getTicketDetails().getIncidentId();
 		}
 
 		String data = "{\"close_code\": \"Solved (Permanently)\"," +

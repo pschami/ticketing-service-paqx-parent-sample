@@ -16,6 +16,7 @@ import com.dell.cpsd.common.rabbitmq.consumer.handler.DefaultMessageHandler;
 import com.dell.cpsd.common.rabbitmq.message.HasMessageProperties;
 import com.dell.cpsd.common.rabbitmq.validators.DefaultMessageValidator;
 import com.dell.cpsd.ticket.servicenow.api.MessageProperties;
+import com.dell.cpsd.ticket.servicenow.api.TicketDetails;
 import com.dell.cpsd.ticket.servicenow.api.TicketServiceRequest;
 import com.dell.cpsd.ticket.servicenow.api.TicketServiceResponse;
 import com.dell.cpsd.ticket.servicenow.producer.TicketingServiceProducer;
@@ -64,12 +65,49 @@ public class TicketingServiceConsumer extends DefaultMessageHandler<TicketServic
 		
             
         String requestReplyTo = request.getMessageProperties().getReplyTo();
-        String responseCode = service.createTicket(request);
+        
+        String requestType = request.getRequestType();
+        
+        String responseCode = "FAILED"; 
+        
+        String incidentId = null;
+        
+        switch (requestType) {
+		case "create":
+			incidentId = service.createTicket(request);	
+			if (incidentId != null)
+			{
+				responseCode = "SUCCESS"; 
+			}			
+			break;
+		case "update":
+			responseCode = service.updateTicket(request);
+			incidentId = request.getTicketDetails().getIncidentId();
+			break;
+		case "approve":
+			responseCode = service.approveTicket(request);
+			incidentId = request.getTicketDetails().getIncidentId();
+			break;
+		case "close":
+			responseCode = service.closeTicket(request);
+			incidentId = request.getTicketDetails().getIncidentId();
+			break;
+
+		default:
+			break;
+		}      
+             
+        
+       
         TicketServiceResponse response = new TicketServiceResponse();
-		response.setResponseCode(responseCode);       
+		response.setResponseCode(responseCode); 
+		response.setEventId(request.getEventId());
+		TicketDetails ticketDetails = new TicketDetails();
+		ticketDetails.setIncidentId(incidentId);
                
 		//Don't set the replyTo..
         response.setMessageProperties(setMessageProperties());
+        response.setTicketDetails(ticketDetails);
                 
         producer.sendResponse(response, requestReplyTo); 
   
