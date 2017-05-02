@@ -61,7 +61,7 @@ public class TicketingServiceService {
 	    // prop.setProperty("servicenow.instance", "instance.service-now.com");
 	    InputStream in = null;
 	    try {
-	    	in = new FileInputStream("config.properties");
+	    	in = new FileInputStream("/opt/dell/cpsd/ticket-servicenow/conf/config.properties");
 	    	// prop.store(in, null);
 	        prop.load(in);
 	        in.close();
