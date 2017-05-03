@@ -202,8 +202,9 @@ public class TicketingServiceService {
 	 	Map result = post("https://" + HOST+CREATE_URL, postData);
 	 	incidentId = (String)((Map)result.get("result")).get("sys_id");
 	 	
-	 	INCIDENT = incidentId;	 	
-	 	LOG.debug("Created incident: " + incidentId);		
+	 	INCIDENT = incidentId;	 
+	 	LOG.info("Recieved new incident: Title: '" + incidentTitle + "' Description: '" + incidentNote + "'");	
+	 	LOG.info("Created incident: " + incidentId);		
 		return incidentId;
 	}
 	
@@ -230,7 +231,8 @@ public class TicketingServiceService {
     						"\"value\": \"" + incidentNote + "\"," +
 							"}";
 	 	Map result = post("https://" + HOST+NOTE_ADD_URL, data);
-	 	LOG.debug("Updated incident: " + incidentId);
+	 	LOG.info("Updating incident: Title: '" + incidentTitle + "' Description: '" + incidentNote + "'");	
+	 	LOG.info("Updated incident: " + incidentId);
 		
 		return "SUCCESS";
 	}
@@ -262,7 +264,8 @@ public class TicketingServiceService {
 						"\"state\": \"7\"}";
 
 	 	Map result = put("https://" + HOST+CREATE_URL+ "/" + incidentId, data);
-	 	LOG.debug("Closed incident: " + incidentId);
+	 	LOG.info("Closing incident: Title: '" + incidentTitle + "' Description: '" + incidentNote + "'");	
+	 	LOG.info("Closed incident: " + incidentId);
 
 		return "SUCCESS";
 	}
