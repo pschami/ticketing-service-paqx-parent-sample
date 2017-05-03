@@ -30,7 +30,7 @@ public class Application extends AsyncConfigurerSupport
     public static void main(String[] args) throws Exception
     {
       
-    	new SpringApplicationBuilder().sources(Application.class).bannerMode(Banner.Mode.LOG).run(args);    	
+    	new SpringApplicationBuilder().sources(Application.class).bannerMode(Banner.Mode.OFF).run(args);    	
      	    		
     
     }
