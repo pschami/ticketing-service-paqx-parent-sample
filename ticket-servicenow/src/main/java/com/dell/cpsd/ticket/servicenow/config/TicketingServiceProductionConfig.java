@@ -25,7 +25,7 @@ import org.springframework.context.annotation.Import;
 @Import(TicketingServicePropertiesConfig.class)
 public class TicketingServiceProductionConfig
 {
-    public static final    String CONFIG_PACKAGE = "com.dell.cpsd.apm";
+    public static final    String CONFIG_PACKAGE = "com.dell.cpsd.ticket.servicenow";
     protected static final String PROFILE        = "production";
 
     @Autowired

@@ -61,7 +61,7 @@ public class TicketingServiceService {
 	    // prop.setProperty("servicenow.instance", "instance.service-now.com");
 	    InputStream in = null;
 	    try {
-	    	in = new FileInputStream("config.properties");
+	    	in = new FileInputStream("/opt/dell/cpsd/ticket-servicenow/conf/config.properties");
 	    	// prop.store(in, null);
 	        prop.load(in);
 	        in.close();
@@ -191,19 +191,21 @@ public class TicketingServiceService {
 			incidentTitle = "Test title";	
 			incidentNote = "test note";
 		} else {
-			 incidentTitle = message.getTicketDetails().getIncidentTitle();
-			 incidentNote = message.getTicketDetails().getIncidentNote();
+			 incidentTitle = message.getTicketDetails().getIncidentTitle().replace('"',' ');
+			 incidentNote = message.getTicketDetails().getIncidentNote().replace('"',' ');
 		}
 		
 
 		// CLEAN UP - example test code to create ServiceNow object
  		// This must be valid json string with valid fields and values from table
-	 	String postData = "{\"short_description\":\"" + incidentTitle + "\"}";
-	 	Map result = post("https://" + HOST+CREATE_URL, postData);
+	 	String data = "{\"short_description\":\"" + incidentTitle + "\"}";
+	 	LOG.info("Recieved new incident: Title: '" + incidentTitle + "' Description: '" + incidentNote + "'");	
+	 	LOG.debug("POST data: " + data);
+	 	Map result = post("https://" + HOST+CREATE_URL, data);
 	 	incidentId = (String)((Map)result.get("result")).get("sys_id");
 	 	
-	 	INCIDENT = incidentId;	 	
-	 	LOG.debug("Created incident: " + incidentId);		
+	 	INCIDENT = incidentId;	 
+	 	LOG.info("Created incident: " + incidentId);		
 		return incidentId;
 	}
 	
@@ -219,9 +221,9 @@ public class TicketingServiceService {
 			incidentNote = "test note added by Symphony";
 			incidentId = INCIDENT;
 		} else {
-			incidentTitle = message.getTicketDetails().getIncidentTitle();
-			incidentNote = message.getTicketDetails().getIncidentNote();
-			incidentId = message.getTicketDetails().getIncidentId();
+			incidentTitle = message.getTicketDetails().getIncidentTitle().replace('"',' ');
+			incidentNote = message.getTicketDetails().getIncidentNote().replace('"',' ');
+			incidentId = message.getTicketDetails().getIncidentId().replace('"',' ');
 		}
 
 		String data = "{\"element\": \"work_notes\"," +
@@ -229,8 +231,10 @@ public class TicketingServiceService {
     						"\"name\": \"task\"," +
     						"\"value\": \"" + incidentNote + "\"," +
 							"}";
-	 	Map result = post("https://" + HOST+NOTE_ADD_URL, data);
-	 	LOG.debug("Updated incident: " + incidentId);
+		LOG.debug("POST data: " + data);
+		LOG.info("Updating incident: Title: '" + incidentTitle + "' Description: '" + incidentNote + "'");
+	 	Map result = post("https://" + HOST+NOTE_ADD_URL, data);	
+	 	LOG.info("Updated incident: " + incidentId);
 		
 		return "SUCCESS";
 	}
@@ -253,16 +257,17 @@ public class TicketingServiceService {
 			incidentId = INCIDENT;
 			incidentNote = "Incident close by Symphony";
 		} else {
-			incidentNote = message.getTicketDetails().getIncidentNote();
-			incidentId = message.getTicketDetails().getIncidentId();
+			incidentNote = message.getTicketDetails().getIncidentNote().replace('"',' ');
+			incidentId = message.getTicketDetails().getIncidentId().replace('"',' ');
 		}
 
 		String data = "{\"close_code\": \"Solved (Permanently)\"," +
 						"\"close_notes\": \"" + incidentNote + "\"," +
 						"\"state\": \"7\"}";
-
-	 	Map result = put("https://" + HOST+CREATE_URL+ "/" + incidentId, data);
-	 	LOG.debug("Closed incident: " + incidentId);
+		LOG.debug("PUT data: " + data);
+		LOG.info("Closing incident: Title: '" + incidentTitle + "' Description: '" + incidentNote + "'");
+	 	Map result = put("https://" + HOST+CREATE_URL+ "/" + incidentId, data);	
+	 	LOG.info("Closed incident: " + incidentId);
 
 		return "SUCCESS";
 	}
