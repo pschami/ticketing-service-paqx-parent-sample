@@ -6,15 +6,18 @@ This module demonstrates an integration of the Service Now REST APIs into Sympho
 ## API overview
 ## Before you begin
 Please create a file ticket-servicenow/config.properties with the following content:  
-```servicenow.instance=YOURINSTANCENAME.service-now.com  
+```
+servicenow.instance=YOURINSTANCENAME.service-now.com  
 servicenow.username=YOURUSERNAME  
-servicenow.password=YOURPASSWORD```
-
+servicenow.password=YOURPASSWORD
+```
 ## Building
 To compile the code and then create a Docker image:  
   
-```mvn compile -U clean  
-mvn install```  
+```
+mvn compile -U clean  
+mvn install
+```  
 
 
 ## Packaging
