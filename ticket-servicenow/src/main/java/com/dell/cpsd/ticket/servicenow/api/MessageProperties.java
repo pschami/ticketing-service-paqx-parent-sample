@@ -1,4 +1,6 @@
-
+/**
+ * Copyright © 2017 Dell Inc. or its subsidiaries. All Rights Reserved.
+ */
 package com.dell.cpsd.ticket.servicenow.api;
 
 import java.util.Date;

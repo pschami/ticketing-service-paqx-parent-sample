@@ -10,8 +10,8 @@ import com.dell.cpsd.ticket.servicenow.services.TicketingServiceException;
  * Copyright &copy; 2017 Dell Inc. or its subsidiaries.  All Rights Reserved.
  * </p>
  *
- * @version 1.0
- * @since 1.0
+ * @version 0.1
+ * @since 0.1
  */
 public interface TicketingServiceProducer
 {
@@ -23,15 +23,6 @@ public interface TicketingServiceProducer
 	 * @throws TicketingServiceException
 	 */
     void sendResponse(final TicketServiceResponse response, final String replyTo) throws TicketingServiceException;
-    
-    /**
-     * 
-     * @param response
-     * @param replyTo
-     * @throws TicketingServiceException
-     */
-    void sendResponse(final TicketServiceErrorResponse response, final String replyTo) throws TicketingServiceException;
-
    
     
 }

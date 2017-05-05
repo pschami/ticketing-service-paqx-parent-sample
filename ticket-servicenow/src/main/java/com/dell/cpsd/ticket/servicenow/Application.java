@@ -1,6 +1,8 @@
-package com.dell.cpsd.ticket.servicenow; /**
- * Copyright &copy; 2017 Dell Inc. or its subsidiaries.  All Rights Reserved.
+/**
+ * Copyright © 2017 Dell Inc. or its subsidiaries. All Rights Reserved.
  */
+
+package com.dell.cpsd.ticket.servicenow; 
 
 import org.springframework.boot.Banner;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
@@ -13,13 +15,13 @@ import com.dell.cpsd.hdp.capability.registry.client.binding.config.CapabilityReg
 import com.dell.cpsd.hdp.capability.registry.client.lookup.config.CapabilityRegistryLookupManagerConfig;
 
 /**
- * Spring boot application class
+ * Ticketing Service application class
  * <p>
  * Copyright &copy; 2017 Dell Inc. or its subsidiaries.  All Rights Reserved.
  * </p>
  *
- * @version 1.0
- * @since 1.0
+ * @version 0.1
+ * @since 0.1
  */
 @SpringBootApplication
 @EnableAsync

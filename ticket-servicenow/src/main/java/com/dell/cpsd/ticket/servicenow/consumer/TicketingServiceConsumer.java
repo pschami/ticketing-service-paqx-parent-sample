@@ -20,21 +20,21 @@ import com.dell.cpsd.ticket.servicenow.api.TicketDetails;
 import com.dell.cpsd.ticket.servicenow.api.TicketServiceRequest;
 import com.dell.cpsd.ticket.servicenow.api.TicketServiceResponse;
 import com.dell.cpsd.ticket.servicenow.producer.TicketingServiceProducer;
-import com.dell.cpsd.ticket.servicenow.services.TicketingServiceService;
+import com.dell.cpsd.ticket.servicenow.services.TicketingIntegrationService;
 /**
  * This class handles Ticketing Service messages.
  * <p>
  * Copyright &copy; 2017 Dell Inc. or its subsidiaries.  All Rights Reserved.
  * </p>
  *
- * @version 1.0
- * @since 1.0
+ * @version 0.1
+ * @since 0.1
  */
 public class TicketingServiceConsumer extends DefaultMessageHandler<TicketServiceRequest>
 {
 
 
-	public TicketingServiceConsumer(TicketingServiceService service, TicketingServiceProducer producer, ErrorTransformer<HasMessageProperties<?>> errorTransformer) {
+	public TicketingServiceConsumer(TicketingIntegrationService service, TicketingServiceProducer producer, ErrorTransformer<HasMessageProperties<?>> errorTransformer) {
 		 
 		
 		super(TicketServiceRequest.class, new DefaultMessageValidator<>(), "", errorTransformer);
@@ -51,7 +51,7 @@ public class TicketingServiceConsumer extends DefaultMessageHandler<TicketServic
      */
 
    
-   	private final TicketingServiceService service;
+   	private final TicketingIntegrationService service;
    	
    
     /**

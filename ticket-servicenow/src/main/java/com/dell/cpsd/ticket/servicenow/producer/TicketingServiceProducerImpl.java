@@ -20,8 +20,8 @@ import com.dell.cpsd.ticket.servicenow.services.TicketingServiceException;
  * Copyright &copy; 2017 Dell Inc. or its subsidiaries.  All Rights Reserved.
  * </p>
  *
- * @version 1.0
- * @since 1.0
+ * @version 0.1
+ * @since 0.1
  */
 public class TicketingServiceProducerImpl implements TicketingServiceProducer
 {
@@ -56,12 +56,6 @@ public class TicketingServiceProducerImpl implements TicketingServiceProducer
         rabbitTemplate.convertAndSend(ticketServiceResponseExchange.getName(), routingKey, response);
 		
 	}
-
-	@Override
-	public void sendResponse(TicketServiceErrorResponse response, String replyTo) throws TicketingServiceException {
-		// TODO Auto-generated method stub
-		
-	}   
     
 }
     

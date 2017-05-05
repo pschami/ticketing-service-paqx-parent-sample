@@ -41,9 +41,9 @@ import java.io.IOException;
 import java.io.FileNotFoundException;
 
 @Service
-public class TicketingServiceService {
+public class TicketingIntegrationService {
 	
-	private static final Logger LOG = LoggerFactory.getLogger(TicketingServiceService.class);
+	private static final Logger LOG = LoggerFactory.getLogger(TicketingIntegrationService.class);
 
 	private static final String CREATE_URL = "/api/now/table/incident";
 	private static final String NOTE_ADD_URL = "/sys_journal_field.do?JSONv2&sysparm_action=insert";
@@ -182,7 +182,7 @@ public class TicketingServiceService {
 
 
 	public String createTicket(TicketServiceRequest message) throws IOException, HttpException {
-		// TODO Auto-generated method stub
+		
 		LOG.debug("Create a service now ticket");
 		String incidentId = "";
 		String incidentTitle = "";
@@ -210,7 +210,7 @@ public class TicketingServiceService {
 	}
 	
 	public String updateTicket(TicketServiceRequest message) throws IOException, HttpException {
-		// TODO Auto-generated method stub
+		
 		LOG.debug("Update a service now ticket");
 		String incidentId = "";
 		String incidentTitle = "";
@@ -240,15 +240,15 @@ public class TicketingServiceService {
 	}
 	
 	public String approveTicket(TicketServiceRequest message) {
-		// TODO Auto-generated method stub
-		LOG.debug("Create a service now ticket");
+		
+		LOG.debug("Approve a service now ticket");
 		
 		return "SUCCESS";
 	}
 	
 	public String closeTicket(TicketServiceRequest message) throws IOException, HttpException {
-		// TODO Auto-generated method stub
-		LOG.debug("Create a service now ticket");
+		
+		LOG.debug("Close a service now ticket");
 		String incidentId = "";
 		String incidentTitle = "";
 		String incidentNote = "";
@@ -274,7 +274,7 @@ public class TicketingServiceService {
 
 
  	public static void main(String[] args) throws IOException, HttpException {
- 		TicketingServiceService restAction = new TicketingServiceService();
+ 		TicketingIntegrationService restAction = new TicketingIntegrationService();
  		restAction.createTicket(null);
  	}
 

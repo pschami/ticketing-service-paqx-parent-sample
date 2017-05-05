@@ -48,8 +48,8 @@ import com.fasterxml.jackson.databind.SerializationFeature;
  * Copyright &copy; 2017 Dell Inc. or its subsidiaries.  All Rights Reserved.
  * </p>
  *
- * @version 1.0
- * @since 1.0
+ * @version 0.1
+ * @since 0.1
  */
 @Configuration
 @Import(TicketingServicePropertiesConfig.class)
@@ -62,14 +62,10 @@ public class TicketingServiceRabbitConfig
     public static final  String ROUTING_KEY_TICKET_REQUEST         = "dell.cpsd.ticket.servicenow.request";
     
     public static final  String ROUTING_KEY_TICKET_RESPONSE         = "dell.cpsd.ticket.servicenow.response{replyTo}";
-    
-    
-   // public static final  String BINDING_TICKET_REQUEST                      = "dell.cpsd.ticket.request"; //TODO fix binding
-    //public static final  String BINDING_TICKET_RESPONSE                      = "dell.cpsd.ticket.response";
-    
+       
     
     public static final  String BINDING_TICKET_REQUEST                      = "dell.cpsd.ticket.servicenow.request";
-    public static final  String BINDING_TICKET_RESPONSE                      = "dell.cpsd.ticket.servicenow.response{replyTo}"; //TODO fix binding
+    public static final  String BINDING_TICKET_RESPONSE                      = "dell.cpsd.ticket.servicenow.response{replyTo}"; 
     
           
     /**
@@ -121,7 +117,7 @@ public class TicketingServiceRabbitConfig
      * This returns the host name for the service.
      *
      * @return The host name for the service.
-     * @since 1.0
+     * @since 0.1
      */
     @Bean
     String hostName()
@@ -242,7 +238,7 @@ public class TicketingServiceRabbitConfig
      * events.
      *
      * @return The <code>FanoutExchange</code> for Ticketing Service messages.
-     * @since 1.0
+     * @since 0.1
      */
     @Bean
     TopicExchange ticketServiceRequestExchange()
@@ -282,7 +278,7 @@ public class TicketingServiceRabbitConfig
      * This returns the <code>AmqpAdmin</code> for the connection factory.
      *
      * @return The AMQP admin object for the connection factory.
-     * @since 1.0
+     * @since 0.1
      */
     @Bean
     AmqpAdmin amqpAdmin()

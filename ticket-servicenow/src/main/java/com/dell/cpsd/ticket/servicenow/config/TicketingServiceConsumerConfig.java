@@ -21,13 +21,12 @@ import org.springframework.context.annotation.Configuration;
 import com.dell.cpsd.common.rabbitmq.consumer.error.DefaultErrorTransformer;
 import com.dell.cpsd.common.rabbitmq.consumer.error.ErrorTransformer;
 import com.dell.cpsd.common.rabbitmq.consumer.handler.DefaultMessageListener;
-import com.dell.cpsd.common.rabbitmq.consumer.handler.DefaultMessageListenerAdapter;
 import com.dell.cpsd.common.rabbitmq.context.builder.DefaultContainerErrorHandler;
 import com.dell.cpsd.common.rabbitmq.message.HasMessageProperties;
 import com.dell.cpsd.ticket.servicenow.api.TicketServiceErrorResponse;
 import com.dell.cpsd.ticket.servicenow.consumer.TicketingServiceConsumer;
 import com.dell.cpsd.ticket.servicenow.producer.TicketingServiceProducer;
-import com.dell.cpsd.ticket.servicenow.services.TicketingServiceService;
+import com.dell.cpsd.ticket.servicenow.services.TicketingIntegrationService;
 
 /**
  * The Ticketing Service Consumer Spring Config class
@@ -35,8 +34,8 @@ import com.dell.cpsd.ticket.servicenow.services.TicketingServiceService;
  * Copyright &copy; 2017 Dell Inc. or its subsidiaries.  All Rights Reserved.
  * </p>
  *
- * @version 1.0
- * @since 1.0
+ * @version 0.1
+ * @since 0.1
  */
 @Configuration
 @ComponentScan(basePackages = {TicketingServiceProductionConfig.CONFIG_PACKAGE})
@@ -58,8 +57,9 @@ public class TicketingServiceConsumerConfig
     @Autowired
     private MessageConverter              messageConverter;
     
+    
     @Autowired
-    private TicketingServiceService ticketingService;
+    private TicketingIntegrationService ticketingService;
     
     @Autowired
     private TicketingServiceProducer ticketingServiceProducer;
@@ -113,7 +113,7 @@ public class TicketingServiceConsumerConfig
         return new DefaultErrorTransformer<>(
         		TicketingServiceRabbitConfig.EXCHANGE_TICKET_RESPONSE,
                 replyTo,
-                () -> new TicketServiceErrorResponse().withMessageProperties(), null);   //TODO fix this                         
+                () -> new TicketServiceErrorResponse().withMessageProperties(), null);                         
        
        
     }
