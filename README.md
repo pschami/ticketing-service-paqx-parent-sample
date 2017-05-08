@@ -1,7 +1,7 @@
 [![License](https://img.shields.io/badge/License-EPL%201.0-red.svg)](https://opensource.org/licenses/EPL-1.0)
 # ticketing-service-paqx-parent-sample
 ## Description
-This module demonstrates integration of ServiceNow REST APIs into Dell Project Symphony.
+This repository demonstrates integration of ServiceNow REST APIs into Project Symphony.
 ## Documentation
 You can find additional documentation for Project Symphony at [dellemc-symphony.readthedocs.io](https://dellemc-symphony.readthedocs.io).
 ## Before you begin
@@ -19,7 +19,7 @@ mvn compile -U clean
 mvn install
 ```  
 
-The code is packaged in a jar file inside a Docker container. 
+The code is packaged in a JAR file inside a Docker container. 
 
 ## Contributing
 Project Symphony is a collection of services and libraries housed at [github.com/dellemc-symphony](https://github.com/dellemc-symphony).
