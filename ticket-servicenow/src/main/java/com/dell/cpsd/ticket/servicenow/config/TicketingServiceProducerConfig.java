@@ -33,12 +33,19 @@ public class TicketingServiceProducerConfig
     @Autowired
     private RabbitTemplate rabbitTemplate;
 
+    /**
+     * The echange to send responses to
+     */
     @Autowired
     private Exchange ticketServiceResponseExchange;
 
     @Autowired
     private String hostName;
 
+    /**
+     * Creates a ticket service producer bean
+     * @return
+     */
     @Bean
     TicketingServiceProducer  ticketingServiceProducer()
     {

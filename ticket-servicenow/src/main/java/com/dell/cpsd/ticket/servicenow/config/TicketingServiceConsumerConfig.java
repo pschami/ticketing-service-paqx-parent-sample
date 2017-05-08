@@ -57,16 +57,27 @@ public class TicketingServiceConsumerConfig
     @Autowired
     private MessageConverter              messageConverter;
     
-    
+    /*
+     * The Ticketing Service.
+     */
     @Autowired
     private TicketingIntegrationService ticketingService;
     
+    /*
+     * The AMQP Producer
+     */
     @Autowired
     private TicketingServiceProducer ticketingServiceProducer;
   
-
+    /*
+     * Request Queue
+     */
     @Autowired
     private Queue ticketServiceRequestQueue;
+    
+    /*
+     * reply to, used as part of routing key for replies
+     */
     
     @Autowired
     private String replyTo;
@@ -99,7 +110,11 @@ public class TicketingServiceConsumerConfig
     {
         return new TicketingServiceConsumer(ticketingService, ticketingServiceProducer, messageErrorTransformer());
     }
-
+    /**
+     * Returns the message listeners to consume messages
+     * 
+     * @return DefaultMessageListener
+     */
 
     @Bean
     DefaultMessageListener ticketingServiceListener()
@@ -107,6 +122,10 @@ public class TicketingServiceConsumerConfig
     	return new DefaultMessageListener(messageConverter, ticketingServiceMessageHandler());
 		
     }
+    /**
+     * Generates Error responses
+     * @return
+     */
     
     ErrorTransformer<HasMessageProperties<?>> messageErrorTransformer()
     {

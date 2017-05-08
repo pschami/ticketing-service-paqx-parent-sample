@@ -29,21 +29,5 @@ public class TicketingServiceDevelopmentConfig
     @Autowired
     private TicketingServicePropertiesConfig propertiesConfig;
 
-    /**
-     * Unsecured Rabbit connection factory. Uses default credentials on localhost.
-     * This is for use in development environments.
-     *
-     * @return the connection factory
-     */
-    /*@Bean
-    @Qualifier("unauthenticatedRabbitConnectionFactory")
-    public ConnectionFactory unauthenticatedRabbitConnectionFactory()
-    {
-        final Integer amqpBrokerPort = propertiesConfig.rabbitPort();
-        final CachingConnectionFactory connectionFactory = new CachingConnectionFactory(HOSTNAME, amqpBrokerPort);
-        connectionFactory.setUsername("guest");
-        connectionFactory.setPassword("guest");
-        return connectionFactory;
-    }*/
 }
 

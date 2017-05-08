@@ -4,11 +4,12 @@
 
 package com.dell.cpsd.ticket.servicenow.services;
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-import org.springframework.stereotype.Service;
-
-import com.dell.cpsd.ticket.servicenow.api.TicketServiceRequest;
+import java.io.FileInputStream;
+import java.io.IOException;
+import java.io.InputStream;
+import java.util.HashMap;
+import java.util.Map;
+import java.util.Properties;
 
 import org.apache.http.HttpEntity;
 import org.apache.http.HttpException;
@@ -17,28 +18,32 @@ import org.apache.http.auth.AuthScope;
 import org.apache.http.auth.UsernamePasswordCredentials;
 import org.apache.http.client.CredentialsProvider;
 import org.apache.http.client.methods.CloseableHttpResponse;
-import org.apache.http.client.methods.HttpPost;
 import org.apache.http.client.methods.HttpDelete;
+import org.apache.http.client.methods.HttpPost;
 import org.apache.http.client.methods.HttpPut;
 import org.apache.http.entity.ByteArrayEntity;
 import org.apache.http.impl.client.BasicCredentialsProvider;
 import org.apache.http.impl.client.CloseableHttpClient;
 import org.apache.http.impl.client.HttpClients;
 import org.apache.http.util.EntityUtils;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+import org.springframework.stereotype.Service;
 
+import com.dell.cpsd.ticket.servicenow.api.TicketServiceRequest;
 import com.google.gson.Gson;
-import java.util.HashMap;
-import java.util.Map;
 
-import java.util.Properties;
-import java.io.InputStream;
-import java.io.FileInputStream;
 
-import java.io.FileOutputStream;
-import java.io.OutputStream;
 
-import java.io.IOException;
-import java.io.FileNotFoundException;
+/**
+ * Ticketing Integration Service, integrates with Service Now
+ * <p>
+ * Copyright &copy; 2017 Dell Inc. or its subsidiaries.  All Rights Reserved.
+ * </p>
+ *
+ * @version 0.1
+ * @since 0.1
+ */
 
 @Service
 public class TicketingIntegrationService {
@@ -53,12 +58,11 @@ public class TicketingIntegrationService {
 	    loadProperties();
 	}
 	static Properties prop;
-
+	
+	
 	private static void loadProperties() {
 	    prop = new Properties();
-	    // prop.setProperty("servicenow.username", "admin");
-	    // prop.setProperty("servicenow.password", "password");
-	    // prop.setProperty("servicenow.instance", "instance.service-now.com");
+	  
 	    InputStream in = null;
 	    try {
 	    	in = new FileInputStream("/opt/dell/cpsd/ticket-servicenow/conf/config.properties");
@@ -69,13 +73,17 @@ public class TicketingIntegrationService {
 	        e.printStackTrace();
 	    }
 	}
-
+	
+	// service now api properties, username, password and the address of the service now instance
 	private static final String USER = prop.getProperty("servicenow.username");
 	private static final String PASS = prop.getProperty("servicenow.password");
 	private static final String HOST = prop.getProperty("servicenow.instance");
 
 
 
+	/*
+	 * Credentials provider for authenticating with service now
+	 */
 	private CredentialsProvider credentialsProvider() {
 		// sets up credentials object
 		CredentialsProvider credsProvider = new BasicCredentialsProvider();
@@ -84,6 +92,10 @@ public class TicketingIntegrationService {
                 new UsernamePasswordCredentials(USER, PASS));
         return credsProvider;
 	}
+	
+	/*
+	 * HTTP post request 
+	 */
 
 	private Map post(String url, String data) throws IOException, HttpException {
 		Map<String,Object> map = null;
@@ -120,6 +132,9 @@ public class TicketingIntegrationService {
 		return map;
 	}
 
+	/*
+	 * HTTP put request 
+	 */
 	private Map put(String url, String data) throws IOException, HttpException {
 		Map<String,Object> map = null;
 		CredentialsProvider credentials = credentialsProvider();
@@ -154,7 +169,10 @@ public class TicketingIntegrationService {
 	
 		return map;
 	}
-
+	
+	/*
+	 * HTTP delete request 
+	 */
 	private void delete(String url) throws IOException, HttpException {
 		CredentialsProvider credentials = credentialsProvider();
 		CloseableHttpClient httpclient = HttpClients.custom()
@@ -178,15 +196,23 @@ public class TicketingIntegrationService {
 		}
 	}
 
-
-
-
+	/**
+	 * 
+	 * Calls service now api to create a ticket
+	 *
+	 * @param message
+	 * @return
+	 * @throws IOException
+	 * @throws HttpException
+	 */
 	public String createTicket(TicketServiceRequest message) throws IOException, HttpException {
 		
 		LOG.debug("Create a service now ticket");
 		String incidentId = "";
 		String incidentTitle = "";
 		String incidentNote = "";
+		
+		//fall back to using canned messages for demo purposes, if no ticket service request message
 		if (message == null) {
 			incidentTitle = "Test title";	
 			incidentNote = "test note";
@@ -196,10 +222,10 @@ public class TicketingIntegrationService {
 		}
 		
 
-		// CLEAN UP - example test code to create ServiceNow object
+		// TODO CLEAN UP - example test code to create ServiceNow object
  		// This must be valid json string with valid fields and values from table
 	 	String data = "{\"short_description\":\"" + incidentTitle + "\"}";
-	 	LOG.info("Recieved new incident: Title: '" + incidentTitle + "' Description: '" + incidentNote + "'");	
+	 	LOG.info("Received new incident: Title: '" + incidentTitle + "' Description: '" + incidentNote + "'");	
 	 	LOG.debug("POST data: " + data);
 	 	Map result = post("https://" + HOST+CREATE_URL, data);
 	 	incidentId = (String)((Map)result.get("result")).get("sys_id");
@@ -208,6 +234,14 @@ public class TicketingIntegrationService {
 	 	LOG.info("Created incident: " + incidentId);		
 		return incidentId;
 	}
+	/**
+	 * Calls service now api to update a ticket
+	 * 
+	 * @param message
+	 * @return
+	 * @throws IOException
+	 * @throws HttpException
+	 */
 	
 	public String updateTicket(TicketServiceRequest message) throws IOException, HttpException {
 		
@@ -216,6 +250,7 @@ public class TicketingIntegrationService {
 		String incidentTitle = "";
 		String incidentNote = "";
 		
+		//fall back to using canned messages for demo purposes, if no ticket service request message
 		if (message == null) {
 			incidentTitle = "Test title";	
 			incidentNote = "test note added by Symphony";
@@ -239,12 +274,26 @@ public class TicketingIntegrationService {
 		return "SUCCESS";
 	}
 	
+	/**
+	 * Method Stub
+	 * @param message
+	 * @return
+	 */
+	
 	public String approveTicket(TicketServiceRequest message) {
 		
 		LOG.debug("Approve a service now ticket");
-		
+		// TODO Auto-generated method stub
 		return "SUCCESS";
 	}
+	/**
+	 * Calls service now api to close a ticket
+	 * 
+	 * @param message
+	 * @return
+	 * @throws IOException
+	 * @throws HttpException
+	 */
 	
 	public String closeTicket(TicketServiceRequest message) throws IOException, HttpException {
 		
@@ -253,6 +302,7 @@ public class TicketingIntegrationService {
 		String incidentTitle = "";
 		String incidentNote = "";
 		
+		//fall back to using canned messages for demo purposes, if no ticket service request message
 		if (message == null) {
 			incidentId = INCIDENT;
 			incidentNote = "Incident close by Symphony";
@@ -272,7 +322,12 @@ public class TicketingIntegrationService {
 		return "SUCCESS";
 	}
 
-
+	/**
+	 * Run service independently for testing purposes
+	 * @param args
+	 * @throws IOException
+	 * @throws HttpException
+	 */
  	public static void main(String[] args) throws IOException, HttpException {
  		TicketingIntegrationService restAction = new TicketingIntegrationService();
  		restAction.createTicket(null);

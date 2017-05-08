@@ -57,17 +57,22 @@ public class TicketingServiceRabbitConfig
 {
     
     /**
-     * The routing key for Ticketing Service event
+     * The routing key for Ticketing Service requests
      */
     public static final  String ROUTING_KEY_TICKET_REQUEST         = "dell.cpsd.ticket.servicenow.request";
     
+    /**
+     * The routing key for Ticketing Service responses
+     */
+    
     public static final  String ROUTING_KEY_TICKET_RESPONSE         = "dell.cpsd.ticket.servicenow.response{replyTo}";
        
-    
+    /**
+     * The Ticketing Service request binding
+     */
     public static final  String BINDING_TICKET_REQUEST                      = "dell.cpsd.ticket.servicenow.request";
-    public static final  String BINDING_TICKET_RESPONSE                      = "dell.cpsd.ticket.servicenow.response{replyTo}"; 
     
-          
+              
     /**
      * The name of the request queue for Ticketing Service service
      */
@@ -235,7 +240,7 @@ public class TicketingServiceRabbitConfig
 
     /**
      * This returns the <code>FanoutExchange</code> for the Ticketing Service
-     * events.
+     * Requests.
      *
      * @return The <code>FanoutExchange</code> for Ticketing Service messages.
      * @since 0.1
@@ -246,12 +251,27 @@ public class TicketingServiceRabbitConfig
         return new TopicExchange(EXCHANGE_TICKET_REQUEST);
     }
     
+    /**
+     * This returns the <code>FanoutExchange</code> for the Ticketing Service
+     * responses.
+     *
+     * @return The <code>FanoutExchange</code> for Ticketing Service messages.
+     * @since 0.1
+     */
+    
     @Bean
     TopicExchange ticketServiceResponseExchange()
     {
         return new TopicExchange(EXCHANGE_TICKET_RESPONSE);
     }
 
+    
+    /**
+     * This returns the request queue for the Ticketing Service
+     *
+     * @return The request queue for Ticketing Service messages.
+     * @since 0.1
+     */
    
     @Bean
     Queue ticketServiceRequestQueue()
