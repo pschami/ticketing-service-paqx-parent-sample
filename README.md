@@ -1,4 +1,5 @@
 [![License](https://img.shields.io/badge/License-EPL%201.0-red.svg)](https://opensource.org/licenses/EPL-1.0)
+[![Build Status](https://travis-ci.org/dellemc-symphony/ticketing-service-paqx-parent-sample.svg?branch=master)](https://travis-ci.org/dellemc-symphony/ticketing-service-paqx-parent-sample)
 # ticketing-service
 ## Description
 This module demonstrates an integration of the Service Now REST APIs into Symphony.
