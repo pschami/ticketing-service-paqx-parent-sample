@@ -17,7 +17,6 @@ RUN mkdir -p /opt/dell/cpsd/ticket-servicenow/conf
 
 COPY target/dependency/lib/ticket-servicenow-*.jar /opt/dell/cpsd/ticket-servicenow/lib/ticket-servicenow.jar
 COPY docker/image/bin/run.sh /opt/dell/cpsd/ticket-servicenow/bin/
-COPY config.properties /opt/dell/cpsd/ticket-servicenow/conf
 
 RUN chmod 755 /opt/dell/cpsd/ticket-servicenow/bin/run.sh
 
