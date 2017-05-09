@@ -41,7 +41,7 @@ pipeline {
         }
         stage('Integration Test') {
             steps {
-                sh "docker exec scaling-module-test-${BUILD_NUMBER} mvn clean verify -DskipDocker=true"
+                sh "docker exec ticket-servicenow-test-${BUILD_NUMBER} mvn clean verify -DskipDocker=true"
             }
         }
     stage('Package') {
