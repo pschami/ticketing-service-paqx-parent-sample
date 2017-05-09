@@ -100,16 +100,16 @@ pipeline {
                     sh '''
                         github-release release \
                             --user dellemc-symphony \
-                            --repo  scaling-module-parent \
+                            --repo  ticketing-service-paqx-parent-sample \
                             --tag v0.0.1-${BRANCH_NAME}-${BUILD_ID} \
-                            --name "scaling-module-parent release" \
-                            --description "scaling-module-parent release"
+                            --name "ticketing-service-paqx-parent-sample release" \
+                            --description "ticketing-service-paqx-parent-sample release"
                         github-release upload \
                             --user dellemc-symphony \
-                            --repo scaling-module-parent \
+                            --repo ticketing-service-paqx-parent-sample \
                             --tag v0.0.1-${BRANCH_NAME}-${BUILD_ID} \
-                            --name "scaling-module-parent release" \
-                            --file ${WORKSPACE}/target/scaling-module-parent-1.0-SNAPSHOT.jar
+                            --name "ticketing-service-paqx-parent-sample release" \
+                            --file ${WORKSPACE}/target/ticketing-service-paqx-parent-sample-1.0-SNAPSHOT.jar
                     '''
                 }
             }
@@ -132,8 +132,8 @@ pipeline {
                 }               
                 sh "mkdir -p /opt/nexB/nexb-output/"
                 sh "sh /opt/nexB/scancode --help"
-                sh "sh /opt/nexB/scancode --format html ${WORKSPACE} /opt/nexB/nexb-output/scaling-module-parent.html"
-                sh "sh /opt/nexB/scancode --format html-app ${WORKSPACE} /opt/nexB/nexb-output/scaling-module-parent-grap.html"        
+                sh "sh /opt/nexB/scancode --format html ${WORKSPACE} /opt/nexB/nexb-output/ticketing-service-paqx-parent-sample.html"
+                sh "sh /opt/nexB/scancode --format html-app ${WORKSPACE} /opt/nexB/nexb-output/ticketing-service-paqx-parent-sample-grap.html"        
             sh "mv /opt/nexB/nexb-output/ ${WORKSPACE}/"
             archiveArtifacts '**/nexb-output/**'
             }
