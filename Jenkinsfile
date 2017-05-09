@@ -46,17 +46,17 @@ pipeline {
         }
     stage('Package') {
         steps {
-                sh "mvn package -DskipTests -DskipITs"
+                sh "mvn package -DskipTests=true -DskipITs"
             }
     }
         stage('Deploy') {
         when {
                 expression {
-                    return env.BRANCH_NAME ==~ /master|release\/.*/
+                    return env.BRANCH_NAME ==~ /develop|release\/.*/
                 }
             }
             steps {
-                sh "mvn install -DskipTests -DskipITs -P buildDockerImageOnJenkins -Ddocker.registry=docker-dev-local.art.local"
+                sh "mvn deploy -DskipTests=true -DskipITs -P buildDockerImageOnJenkins -Ddocker.registry=docker-dev-local.art.local"
             }
         }
         stage('SonarQube Analysis') {
@@ -118,7 +118,7 @@ pipeline {
         stage('NexB Scan') {
         when {
                 expression {
-                    return env.BRANCH_NAME ==~ /master|release\/.*/
+                    return env.BRANCH_NAME ==~ /master|develop|release\/.*/
                 }
             }
             steps {
