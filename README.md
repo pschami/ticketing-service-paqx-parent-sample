@@ -1,7 +1,7 @@
 [![License](https://img.shields.io/badge/License-EPL%201.0-red.svg)](https://opensource.org/licenses/EPL-1.0)
 # ticketing-service-paqx-parent-sample
 ## Description
-This repository demonstrates integration of ServiceNow REST APIs into Project Symphony.
+This repository demonstrates integration of ServiceNow REST APIs into Project Symphony. It requires internet or VPN access to a ServiceNow system.
 ## Documentation
 You can find additional documentation for Project Symphony at [dellemc-symphony.readthedocs.io](https://dellemc-symphony.readthedocs.io).
 ## Before you begin
