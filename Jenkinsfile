@@ -30,7 +30,7 @@ pipeline {
     stages {
         stage('Compile') {
             steps {
-                sh "mvn -U clean compile"
+                sh "mvn -U clean install -DskipTests=true -DskipITs"
             }
         }
         stage('Prepare test services') {
@@ -41,7 +41,7 @@ pipeline {
         }
         stage('Integration Test') {
             steps {
-                sh "docker exec scaling-module-test-${BUILD_NUMBER} mvn clean verify -DskipDocker=true"
+                sh "docker exec ticket-servicenow-test-${BUILD_NUMBER} mvn clean verify -DskipDocker=true"
             }
         }
     stage('Package') {
@@ -56,7 +56,7 @@ pipeline {
                 }
             }
             steps {
-                sh "mvn help:active-profiles deploy -DskipTests -DskipITs -P buildDockerImageOnJenkins -Ddocker.registry=docker-dev-local.art.local"
+                sh "mvn install -DskipTests -DskipITs -P buildDockerImageOnJenkins -Ddocker.registry=docker-dev-local.art.local"
             }
         }
         stage('SonarQube Analysis') {
@@ -75,29 +75,7 @@ pipeline {
                 }
             }
         }
-        stage('NexB Scan') {
-        when {
-                expression {
-                    return env.BRANCH_NAME ==~ /master|release\/.*/
-                }
-            }
-            steps {
-                dir('/opt') {
-                    checkout([$class: 'GitSCM', 
-                              branches: [[name: '*/master']], 
-                              doGenerateSubmoduleConfigurations: false, 
-                              extensions: [[$class: 'RelativeTargetDirectory', relativeTargetDir: 'nexB']], 
-                              submoduleCfg: [], 
-                              userRemoteConfigs: [[url: 'https://github.com/nexB/scancode-toolkit.git']]])
-                }               
-                sh "mkdir -p /opt/nexB/nexb-output/"
-                sh "sh /opt/nexB/scancode --help"
-                sh "sh /opt/nexB/scancode --format html ${WORKSPACE} /opt/nexB/nexb-output/scaling-module-parent.html"
-                sh "sh /opt/nexB/scancode --format html-app ${WORKSPACE} /opt/nexB/nexb-output/scaling-module-parent-grap.html"        
-            sh "mv /opt/nexB/nexb-output/ ${WORKSPACE}/"
-            archiveArtifacts '**/nexb-output/**'
-            }
-        }
+		
         stage('Third Party Audit') {
             steps {
                 sh '''
@@ -123,18 +101,42 @@ pipeline {
                     sh '''
                         github-release release \
                             --user dellemc-symphony \
-                            --repo  scaling-module-parent \
+                            --repo  ticketing-service-paqx-parent-sample \
                             --tag v0.0.1-${BRANCH_NAME}-${BUILD_ID} \
-                            --name "scaling-module-parent release" \
-                            --description "scaling-module-parent release"
+                            --name "ticketing-service-paqx-parent-sample release" \
+                            --description "ticketing-service-paqx-parent-sample release"
                         github-release upload \
                             --user dellemc-symphony \
-                            --repo scaling-module-parent \
+                            --repo ticketing-service-paqx-parent-sample \
                             --tag v0.0.1-${BRANCH_NAME}-${BUILD_ID} \
-                            --name "scaling-module-parent release" \
-                            --file ${WORKSPACE}/target/scaling-module-parent-1.0-SNAPSHOT.jar
+                            --name "ticketing-service-paqx-parent-sample release" \
+                            --file ${WORKSPACE}/target/ticketing-service-paqx-parent-sample-1.0-SNAPSHOT.jar
                     '''
                 }
+            }
+        }
+        stage('NexB Scan') {
+        when {
+                expression {
+                    return env.BRANCH_NAME ==~ /master|release\/.*/
+                }
+            }
+            steps {
+                sh "mvn clean"
+                dir('/opt') {
+                    checkout([$class: 'GitSCM', 
+                              branches: [[name: '*/master']], 
+                              doGenerateSubmoduleConfigurations: false, 
+                              extensions: [[$class: 'RelativeTargetDirectory', relativeTargetDir: 'nexB']], 
+                              submoduleCfg: [], 
+                              userRemoteConfigs: [[url: 'https://github.com/nexB/scancode-toolkit.git']]])
+                }               
+                sh "mkdir -p /opt/nexB/nexb-output/"
+                sh "sh /opt/nexB/scancode --help"
+                sh "sh /opt/nexB/scancode --format html ${WORKSPACE} /opt/nexB/nexb-output/ticketing-service-paqx-parent-sample.html"
+                sh "sh /opt/nexB/scancode --format html-app ${WORKSPACE} /opt/nexB/nexb-output/ticketing-service-paqx-parent-sample-grap.html"        
+            sh "mv /opt/nexB/nexb-output/ ${WORKSPACE}/"
+            archiveArtifacts '**/nexb-output/**'
             }
         }
     }

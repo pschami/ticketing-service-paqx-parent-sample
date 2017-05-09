@@ -1,6 +1,8 @@
+/**
+ * Copyright &copy; 2017 Dell Inc. or its subsidiaries.  All Rights Reserved.
+ */
 package com.dell.cpsd.ticket.servicenow.producer;
 
-import com.dell.cpsd.ticket.servicenow.api.TicketServiceErrorResponse;
 import com.dell.cpsd.ticket.servicenow.api.TicketServiceResponse;
 import com.dell.cpsd.ticket.servicenow.services.TicketingServiceException;
 
@@ -17,7 +19,7 @@ public interface TicketingServiceProducer
 {
 
 	/**
-	 * 
+	 * Sends a response to a ticket service request
 	 * @param response
 	 * @param replyTo
 	 * @throws TicketingServiceException

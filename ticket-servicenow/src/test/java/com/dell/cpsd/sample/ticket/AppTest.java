@@ -1,11 +1,11 @@
+/**
+ * Copyright © 2017 Dell Inc. or its subsidiaries. All Rights Reserved.
+ */
 package com.dell.cpsd.sample.ticket;
 
 import junit.framework.Test;
 import junit.framework.TestCase;
 import junit.framework.TestSuite;
-
-import com.dell.cpsd.ticket.servicenow.services.*;
-import com.dell.cpsd.ticket.servicenow.api.*;
 /**
  * Unit test for simple App.
  */

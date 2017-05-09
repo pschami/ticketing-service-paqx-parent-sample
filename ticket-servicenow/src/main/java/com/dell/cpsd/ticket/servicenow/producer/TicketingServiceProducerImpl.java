@@ -9,7 +9,6 @@ import org.slf4j.LoggerFactory;
 import org.springframework.amqp.core.Exchange;
 import org.springframework.amqp.rabbit.core.RabbitTemplate;
 
-import com.dell.cpsd.ticket.servicenow.api.TicketServiceErrorResponse;
 import com.dell.cpsd.ticket.servicenow.api.TicketServiceResponse;
 import com.dell.cpsd.ticket.servicenow.config.TicketingServiceRabbitConfig;
 import com.dell.cpsd.ticket.servicenow.services.TicketingServiceException;
@@ -31,7 +30,8 @@ public class TicketingServiceProducerImpl implements TicketingServiceProducer
 
 
     /**
-     * @param rabbitTemplate                    Rabbit Template
+     * Constructor
+     * @param rabbitTemplate Rabbit Template
      * @param ticketServiceResponseExchange Event Exchange
      */
     public TicketingServiceProducerImpl(final RabbitTemplate rabbitTemplate, final Exchange ticketServiceResponseExchange)
