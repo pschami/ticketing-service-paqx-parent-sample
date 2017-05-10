@@ -28,6 +28,6 @@ Project Symphony is a collection of services and libraries housed at [github.com
 
 Contribute code and make submissions at the relevant GitHub repository level. See [our documentation](https://dellemc-symphony.readthedocs.io/en/latest/contributing.html) for details on how to contribute.
 ## Community
-Reach out to us on the Slack #symphony channel. Request an invite at [community.codedellemc.com](http://community.codedellemc.com).
+Reach out to us on the Slack [#symphony](https://codecommunity.slack.com/messages/symphony) channel by requesting an invite at [community.codedellemc.com](http://community.codedellemc.com).
 
 You can also join [Google Groups](https://groups.google.com/d/forum/dellemc-symphony) and start a discussion.
