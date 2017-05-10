@@ -4,18 +4,18 @@
 # ticketing-service-paqx-parent-sample
 
 ## Description
-This repository demonstrates integration of ServiceNow REST APIs into Project Symphony. It requires internet or VPN access to a ServiceNow system.
+This repository demonstrates an integration of ServiceNow REST APIs into Project Symphony. It requires internet or VPN access to a ServiceNow system.
 ## Documentation
 You can find additional documentation for Project Symphony at [dellemc-symphony.readthedocs.io](https://dellemc-symphony.readthedocs.io).
 ## Before you begin
-Create a ticket-servicenow/config.properties file with the following content:  
+Create a *ticket-servicenow/config.properties* file with the following content:  
 ```
 servicenow.instance=YOURINSTANCENAME.service-now.com  
 servicenow.username=YOURUSERNAME  
 servicenow.password=YOURPASSWORD
 ```
 ## Building
-Run the following commands to compile the code and create a Docker image:  
+Run the following command to compile the code and create a Docker image:  
   
 ```
 mvn install
