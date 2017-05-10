@@ -7,12 +7,13 @@
     <parent>
         <groupId>com.dell.cpsd.ticket.servicenow</groupId>
         <artifactId>ticket-servicenow-parent</artifactId>
-        <version>0.0.2-SNAPSNOT</version>
+        <version>0.0.2-SNAPSHOT</version>
     </parent>
 
     <packaging>pom</packaging>
     <artifactId>ticket-servicenow-distribution</artifactId>
     <name>ServiceNow Ticketing Distribution</name>
+    <version>0.0.2-SNAPSHOT</version>
 
     <licenses>
         <license>
@@ -79,10 +80,6 @@
                 </executions>
             </plugin>
             <plugin>
-                <groupId>com.spotify</groupId>
-                <artifactId>docker-maven-plugin</artifactId>
-            </plugin>
-            <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-gpg-plugin</artifactId>
             </plugin>
@@ -96,5 +93,24 @@
             </plugin>
         </plugins>
     </build>
+
+    <profiles>
+        <profile>
+            <id>unix-environment</id>
+	    <activation>
+		<os>
+		    <family>unix</family>
+		</os>
+	    </activation>
+	    <build>
+		<plugins>
+		    <plugin>
+			<groupId>com.spotify</groupId>
+			<artifactId>docker-maven-plugin</artifactId>
+		    </plugin>
+		</plugins>
+	    </build>
+	</profile>
+    </profiles>
 
 </project>
